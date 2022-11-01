@@ -1,0 +1,41 @@
+.centralised {
+  color: white;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.item {
+  cursor: pointer;
+  margin: 50px;
+  font-size: xx-large;
+}
+
+.item1 {
+  color: rgb(68, 255, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.item2 {
+  color: rgb(255, 247, 0);
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.item3 {
+  color: rgb(0, 128, 255);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.item4 {
+  color: rgb(237, 0, 0);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
