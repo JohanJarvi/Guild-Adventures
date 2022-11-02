@@ -11,17 +11,17 @@ const keyedNodes: KeyedNode[] = [
   {
     key: 1,
     value: {
-      notice: { value: "... in a dark room!", nextNode: 2 },
+      notice: { value: "... in a dark room!", nextNode: 3 },
       options: [],
     },
   },
-  {
-    key: 2,
-    value: {
-      notice: { value: "Escape. If you can!", nextNode: 3 },
-      options: [],
-    },
-  },
+  // {
+  //   key: 2,
+  //   value: {
+  //     notice: { value: "Escape. If you can!", nextNode: 3 },
+  //     options: [],
+  //   },
+  // },
   {
     key: 3,
     value: {
@@ -92,6 +92,42 @@ const keyedNodes: KeyedNode[] = [
           eliminated: false,
           nextNode: 8,
           eliminatesOnClick: false,
+        },
+      ],
+    },
+  },
+  {
+    key: 8,
+    value: {
+      notice: {
+        value: "You cry.",
+        nextNode: 8,
+      },
+
+      options: [
+        {
+          value: "Cry.",
+          eliminated: false,
+          nextNode: 8,
+          eliminatesOnClick: true,
+        },
+        {
+          value: "Cry!",
+          eliminated: false,
+          nextNode: 8,
+          eliminatesOnClick: true,
+        },
+        {
+          value: "Cry?",
+          eliminated: false,
+          nextNode: 8,
+          eliminatesOnClick: true,
+        },
+        {
+          value: "Don't cry.",
+          eliminated: false,
+          nextNode: 10,
+          eliminatesOnClick: true,
         },
       ],
     },

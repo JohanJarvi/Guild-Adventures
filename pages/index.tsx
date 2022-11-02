@@ -11,9 +11,11 @@ type HomeProps = {
 const Home: NextPage<HomeProps> = (props) => {
   const [shownNode, setShownNode] = useState(0);
 
-  const nodeMap: Map<number, Node> = new Map(
+  const nodeMap: Map<number, Node | undefined> = new Map(
     props.nodes.map((node) => [node.key, node.value])
   );
+
+  const [nodes, setNodes] = useState(nodeMap);
 
   const handleNodeInteraction = (
     infoClicked: boolean,
@@ -34,6 +36,9 @@ const Home: NextPage<HomeProps> = (props) => {
             option.eliminated = true;
           }
         });
+
+        nodeMap.set(shownNode, node);
+        setNodes(nodeMap);
       }
 
       matchingOption ? setShownNode(matchingOption.nextNode) : setShownNode(0);
@@ -60,10 +65,10 @@ const Home: NextPage<HomeProps> = (props) => {
           style={{ cursor: "pointer" }}
           onClick={() => handleNodeInteraction(true)}
         >
-          {nodeMap.get(shownNode)?.notice.value}
+          {nodes.get(shownNode)?.notice.value}
         </h1>
       </div>
-      {nodeMap
+      {nodes
         .get(shownNode)
         ?.options.filter((option) => !option.eliminated)
         .map((option, index) => {
