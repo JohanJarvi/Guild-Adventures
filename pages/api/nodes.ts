@@ -61,6 +61,41 @@ const keyedNodes: KeyedNode[] = [
       options: [],
     },
   },
+  {
+    key: 4,
+    value: {
+      notice: {
+        value: "How; it's a dark room?",
+        nextNode: 4,
+      },
+      options: [
+        {
+          value: "Oh yeah...",
+          eliminated: false,
+          nextNode: 3,
+          eliminatesOnClick: true,
+        },
+        {
+          value: "Umm.. go back to sleep?",
+          eliminated: false,
+          nextNode: 5,
+          eliminatesOnClick: true,
+        },
+        {
+          value: "Extend your arms and walk forward",
+          eliminated: false,
+          nextNode: 9,
+          eliminatesOnClick: false,
+        },
+        {
+          value: "Lie down and try not to cry",
+          eliminated: false,
+          nextNode: 8,
+          eliminatesOnClick: false,
+        },
+      ],
+    },
+  },
 ];
 
 const getNodes = (): KeyedNode[] => keyedNodes;

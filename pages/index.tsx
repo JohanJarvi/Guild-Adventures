@@ -17,21 +17,26 @@ const Home: NextPage<HomeProps> = (props) => {
 
   const handleNodeInteraction = (
     infoClicked: boolean,
-    optionClicked: number
+    optionValue?: string
   ) => {
     const node: Node | undefined = nodeMap.get(shownNode);
 
     if (infoClicked) {
       node ? setShownNode(node.notice.nextNode) : setShownNode(0);
     } else {
-      if (node?.options[optionClicked].eliminatesOnClick) {
-        node.options[optionClicked].eliminated = true;
-        nodeMap.set(shownNode, node);
+      const matchingOption = node?.options.find(
+        (option) => option.value === optionValue
+      );
+
+      if (matchingOption?.eliminatesOnClick) {
+        node?.options.forEach((option) => {
+          if (option == matchingOption) {
+            option.eliminated = true;
+          }
+        });
       }
 
-      node
-        ? setShownNode(node.options[optionClicked].nextNode)
-        : setShownNode(0);
+      matchingOption ? setShownNode(matchingOption.nextNode) : setShownNode(0);
     }
   };
 
@@ -53,7 +58,7 @@ const Home: NextPage<HomeProps> = (props) => {
       <div className={styles.centralised}>
         <h1
           style={{ cursor: "pointer" }}
-          onClick={() => handleNodeInteraction(true, NaN)}
+          onClick={() => handleNodeInteraction(true)}
         >
           {nodeMap.get(shownNode)?.notice.value}
         </h1>
@@ -67,7 +72,7 @@ const Home: NextPage<HomeProps> = (props) => {
               style={{ cursor: "pointer" }}
               key={"option-" + index}
               className={`${styles.item} ${getClass(index)}`}
-              onClick={() => handleNodeInteraction(false, index)}
+              onClick={() => handleNodeInteraction(false, option.value)}
             >
               {option.value}
             </div>
