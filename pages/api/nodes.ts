@@ -227,7 +227,7 @@ const node10: KeyedNode = {
       {
         value: "Flail your arms around!",
         eliminated: false,
-        nextNode: 10,
+        nextNode: 999,
         eliminatesOnClick: false,
       },
     ],
@@ -256,6 +256,28 @@ const node12: KeyedNode = {
   },
 };
 
+const deathNode: KeyedNode = {
+  key: 999,
+  value: {
+    notice: {
+      value: "You die! You DIE! YOU DIE!!!",
+      nextNode: 9999,
+    },
+    options: [],
+  },
+};
+
+const gameOver: KeyedNode = {
+  key: 9999,
+  value: {
+    notice: {
+      value: "Game Over! Refresh to try again.",
+      nextNode: 9999,
+    },
+    options: [],
+  },
+};
+
 const keyedNodes = [
   node0,
   node1,
@@ -268,6 +290,8 @@ const keyedNodes = [
   node10,
   node11,
   node12,
+  deathNode,
+  gameOver,
 ];
 
 const doesAnyOptionCallMissingNode = (): boolean => {
