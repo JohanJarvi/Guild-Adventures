@@ -72,7 +72,7 @@ const node4: KeyedNode = {
       {
         value: "Extend your arms and walk forward",
         eliminated: false,
-        nextNode: 4,
+        nextNode: 17,
         eliminatesOnClick: false,
       },
       {
@@ -213,13 +213,13 @@ const node10: KeyedNode = {
         eliminatesOnClick: false,
       },
       {
-        value: "Who are you?",
+        value: "Someone there?",
         eliminated: false,
         nextNode: 10,
         eliminatesOnClick: false,
       },
       {
-        value: "Run!!",
+        value: "Run forwards!",
         eliminated: false,
         nextNode: 10,
         eliminatesOnClick: false,
@@ -319,6 +319,83 @@ const node16: KeyedNode = {
   },
 };
 
+const node17: KeyedNode = {
+  key: 17,
+  value: {
+    notice: {
+      value: "Eventually you feel a wall",
+      nextNode: 16,
+    },
+    options: [
+      {
+        value: "Caress the wall",
+        eliminated: false,
+        nextNode: 19,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Step back and leap into wall",
+        eliminated: false,
+        nextNode: 999,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Follow wall North!",
+        eliminated: false,
+        nextNode: 7,
+        eliminatesOnClick: false,
+      },
+      {
+        value: "Lick it?",
+        eliminated: false,
+        nextNode: 18,
+        eliminatesOnClick: false,
+      },
+    ],
+  },
+};
+
+const node18: KeyedNode = {
+  key: 18,
+  value: {
+    notice: {
+      value: "You sick f***s! Gross!",
+      nextNode: 17,
+    },
+    options: [],
+  },
+};
+
+const node19: KeyedNode = {
+  key: 19,
+  value: {
+    notice: {
+      value: "The wall feels soft; almost furry?",
+      nextNode: 19,
+    },
+    options: [
+      {
+        value: "Lick it?",
+        eliminated: false,
+        nextNode: 18,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Stroke the furry wall!",
+        eliminated: false,
+        nextNode: 18,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Lean against wall",
+        eliminated: false,
+        nextNode: 10,
+        eliminatesOnClick: false,
+      },
+    ],
+  },
+};
+
 const deathNode: KeyedNode = {
   key: 999,
   value: {
@@ -357,6 +434,9 @@ const keyedNodes = [
   node14,
   node15,
   node16,
+  node17,
+  node18,
+  node19,
   deathNode,
   gameOver,
 ];
