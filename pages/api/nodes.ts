@@ -37,13 +37,13 @@ const node3: KeyedNode = {
         value: "Scream loudly",
         eliminated: false,
         eliminatesOnClick: false,
-        nextNode: 3,
+        nextNode: 6,
       },
       {
         value: "Go North",
         eliminated: false,
         eliminatesOnClick: false,
-        nextNode: 3,
+        nextNode: 7,
       },
     ],
   },
@@ -90,6 +90,75 @@ const node5: KeyedNode = {
   value: {
     notice: { value: "You sleep for a solid 8 hours.", nextNode: 0 },
     options: [],
+  },
+};
+
+const node6: KeyedNode = {
+  key: 6,
+  value: {
+    notice: { value: "Still a dark room...", nextNode: 6 },
+    options: [
+      {
+        value: "Try scream some more.",
+        eliminated: false,
+        nextNode: 11,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Take out your flashlight",
+        eliminated: false,
+        nextNode: 12,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Crawl... north?",
+        eliminated: false,
+        nextNode: 7,
+        eliminatesOnClick: false,
+      },
+      {
+        value: "Cry.",
+        eliminated: false,
+        nextNode: 8,
+        eliminatesOnClick: true,
+      },
+    ],
+  },
+};
+
+const node7: KeyedNode = {
+  key: 7,
+  value: {
+    notice: {
+      value: "How do you know where north is?",
+      nextNode: 7,
+    },
+    options: [
+      {
+        value: "I am an alien.",
+        eliminated: false,
+        nextNode: 7,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "My smartphone has a compass",
+        eliminated: false,
+        nextNode: 7,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Intuition!",
+        eliminated: false,
+        nextNode: 7,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Because I am the captain now!",
+        eliminated: false,
+        nextNode: 7,
+        eliminatesOnClick: true,
+      },
+    ],
   },
 };
 
@@ -165,7 +234,41 @@ const node10: KeyedNode = {
   },
 };
 
-const keyedNodes = [node0, node1, node3, node4, node5, node8, node10];
+const node11: KeyedNode = {
+  key: 11,
+  value: {
+    notice: {
+      value: "It's... still a dark room.",
+      nextNode: 6,
+    },
+    options: [],
+  },
+};
+
+const node12: KeyedNode = {
+  key: 12,
+  value: {
+    notice: {
+      value: "You don't have a flashlight.",
+      nextNode: 6,
+    },
+    options: [],
+  },
+};
+
+const keyedNodes = [
+  node0,
+  node1,
+  node3,
+  node4,
+  node5,
+  node6,
+  node7,
+  node8,
+  node10,
+  node11,
+  node12,
+];
 
 const doesAnyOptionCallMissingNode = (): boolean => {
   const uniqueNextNodes = new Set(
