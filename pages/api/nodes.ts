@@ -137,25 +137,25 @@ const node7: KeyedNode = {
       {
         value: "I am an alien.",
         eliminated: false,
-        nextNode: 7,
+        nextNode: 13,
         eliminatesOnClick: true,
       },
       {
         value: "My smartphone has a compass",
         eliminated: false,
-        nextNode: 7,
+        nextNode: 14,
         eliminatesOnClick: true,
       },
       {
         value: "Intuition!",
         eliminated: false,
-        nextNode: 7,
+        nextNode: 15,
         eliminatesOnClick: true,
       },
       {
         value: "Because I am the captain now!",
         eliminated: false,
-        nextNode: 7,
+        nextNode: 16,
         eliminatesOnClick: true,
       },
     ],
@@ -202,7 +202,7 @@ const node10: KeyedNode = {
   key: 10,
   value: {
     notice: {
-      value: "Good; crying bothers me.",
+      value: "Smile!",
       nextNode: 10,
     },
     options: [
@@ -256,6 +256,69 @@ const node12: KeyedNode = {
   },
 };
 
+const node13: KeyedNode = {
+  key: 13,
+  value: {
+    notice: {
+      value: "No you're not.",
+      nextNode: 7,
+    },
+    options: [],
+  },
+};
+
+const node14: KeyedNode = {
+  key: 14,
+  value: {
+    notice: {
+      value: "No, you had a smartphone. I have it now.",
+      nextNode: 10,
+    },
+    options: [],
+  },
+};
+
+const node15: KeyedNode = {
+  key: 15,
+  value: {
+    notice: {
+      value: "Intuition aye?",
+      nextNode: 999,
+    },
+    options: [],
+  },
+};
+
+const node16: KeyedNode = {
+  key: 16,
+  value: {
+    notice: {
+      value: "Oh really? Well then where to Captain?",
+      nextNode: 16,
+    },
+    options: [
+      {
+        value: "Mars?",
+        eliminated: false,
+        nextNode: 999,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "To a dark room!",
+        eliminated: false,
+        nextNode: 0,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "How about... north?",
+        eliminated: false,
+        nextNode: 7,
+        eliminatesOnClick: false,
+      },
+    ],
+  },
+};
+
 const deathNode: KeyedNode = {
   key: 999,
   value: {
@@ -290,6 +353,10 @@ const keyedNodes = [
   node10,
   node11,
   node12,
+  node13,
+  node14,
+  node15,
+  node16,
   deathNode,
   gameOver,
 ];
