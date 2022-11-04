@@ -1,5 +1,7 @@
 import { KeyedNode } from "../../types";
 
+// TODO - replace with call to a database that grabs each node
+
 const node0: KeyedNode = {
   key: 0,
   value: {
@@ -192,7 +194,7 @@ const node8: KeyedNode = {
         value: "Don't cry.",
         eliminated: false,
         nextNode: 10,
-        eliminatesOnClick: true,
+        eliminatesOnClick: false,
       },
     ],
   },
@@ -209,19 +211,19 @@ const node10: KeyedNode = {
       {
         value: "What?",
         eliminated: false,
-        nextNode: 10,
+        nextNode: 23,
         eliminatesOnClick: false,
       },
       {
         value: "Someone there?",
         eliminated: false,
-        nextNode: 10,
+        nextNode: 20,
         eliminatesOnClick: false,
       },
       {
         value: "Run forwards!",
         eliminated: false,
-        nextNode: 10,
+        nextNode: 17,
         eliminatesOnClick: false,
       },
       {
@@ -271,7 +273,7 @@ const node14: KeyedNode = {
   key: 14,
   value: {
     notice: {
-      value: "No, you had a smartphone. I have it now.",
+      value: "You don't have a smartphone. I have it now.",
       nextNode: 10,
     },
     options: [],
@@ -323,7 +325,7 @@ const node17: KeyedNode = {
   key: 17,
   value: {
     notice: {
-      value: "Eventually you feel a wall",
+      value: "Eventually you reach a wall",
       nextNode: 16,
     },
     options: [
@@ -396,6 +398,148 @@ const node19: KeyedNode = {
   },
 };
 
+const node20: KeyedNode = {
+  key: 20,
+  value: {
+    notice: {
+      value: "...",
+      nextNode: 20,
+    },
+    options: [
+      {
+        value: "Go full Chuck Norris!",
+        eliminated: false,
+        nextNode: 21,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Stare blankly into the abyss",
+        eliminated: false,
+        nextNode: 999,
+        eliminatesOnClick: true,
+      },
+    ],
+  },
+};
+
+const node21: KeyedNode = {
+  key: 21,
+  value: {
+    notice: {
+      value: "You put on a red bandana and then...",
+      nextNode: 21,
+    },
+    options: [
+      {
+        value: "Backflip",
+        eliminated: false,
+        nextNode: 999,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Flail your arms around!",
+        eliminated: false,
+        nextNode: 999,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Wax on, Wax off",
+        eliminated: false,
+        nextNode: 999,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Pose like Bruce Lee",
+        eliminated: false,
+        nextNode: 22,
+        eliminatesOnClick: true,
+      },
+    ],
+  },
+};
+
+const node22: KeyedNode = {
+  key: 22,
+  value: {
+    notice: {
+      value: "You look ridiculous for a moment and then...",
+      nextNode: 999,
+    },
+    options: [],
+  },
+};
+
+const node23: KeyedNode = {
+  key: 23,
+  value: {
+    notice: {
+      value: "Smile?",
+      nextNode: 23,
+    },
+    options: [
+      {
+        value: "No.",
+        eliminated: false,
+        nextNode: 23,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Crack a small smile",
+        eliminated: false,
+        nextNode: 999,
+        eliminatesOnClick: false,
+      },
+      {
+        value: "No thank you.",
+        eliminated: false,
+        nextNode: 23,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Punch the air in front of you.",
+        eliminated: false,
+        nextNode: 24,
+        eliminatesOnClick: false,
+      },
+    ],
+  },
+};
+
+const node24: KeyedNode = {
+  key: 24,
+  value: {
+    notice: {
+      value: "You just punched the air... why'd you do that?",
+      nextNode: 24,
+    },
+    options: [
+      {
+        value: "Deeply rooted anger issues!",
+        eliminated: false,
+        nextNode: 23,
+        eliminatesOnClick: true,
+      },
+      {
+        value: "Because; I. Am. SPARTA!",
+        eliminated: false,
+        nextNode: 25,
+        eliminatesOnClick: true,
+      },
+    ],
+  },
+};
+
+const node25: KeyedNode = {
+  key: 25,
+  value: {
+    notice: {
+      value: "Hahaha! Pathetic. Guess what?",
+      nextNode: 999,
+    },
+    options: [],
+  },
+};
+
 const deathNode: KeyedNode = {
   key: 999,
   value: {
@@ -411,8 +555,8 @@ const gameOver: KeyedNode = {
   key: 9999,
   value: {
     notice: {
-      value: "Game Over! Refresh to try again.",
-      nextNode: 9999,
+      value: "Game Over! Try again?",
+      nextNode: 0,
     },
     options: [],
   },
@@ -437,6 +581,12 @@ const keyedNodes = [
   node17,
   node18,
   node19,
+  node20,
+  node21,
+  node22,
+  node23,
+  node24,
+  node25,
   deathNode,
   gameOver,
 ];
