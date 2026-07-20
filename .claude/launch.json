@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "guild-adventures",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": [
+        "-c",
+        "PATH=\"$HOME/.nvm/versions/node/v24.12.0/bin:$PATH\" pnpm dev"
+      ],
+      "port": 3000
+    }
+  ]
+}

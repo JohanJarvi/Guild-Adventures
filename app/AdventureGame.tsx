@@ -1,27 +1,25 @@
-import { GetServerSideProps, NextPage } from "next";
+"use client";
+
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 import { KeyedNode, Node } from "../types";
-import getNodes from "./api/nodes";
 
-type HomeProps = {
+type AdventureGameProps = {
   nodes: KeyedNode[];
 };
 
-const Home: NextPage<HomeProps> = (props) => {
+const AdventureGame = (props: AdventureGameProps) => {
   const [shownNode, setShownNode] = useState(0);
 
-  const nodeMap: Map<number, Node | undefined> = new Map(
-    props.nodes.map((node) => [node.key, node.value])
+  const [nodes, setNodes] = useState<Map<number, Node | undefined>>(
+    () => new Map(props.nodes.map((node) => [node.key, node.value]))
   );
-
-  const [nodes, setNodes] = useState(nodeMap);
 
   const handleNodeInteraction = (
     infoClicked: boolean,
     optionValue?: string
   ) => {
-    const node: Node | undefined = nodeMap.get(shownNode);
+    const node: Node | undefined = nodes.get(shownNode);
 
     if (infoClicked) {
       node ? setShownNode(node.notice.nextNode) : setShownNode(0);
@@ -30,15 +28,13 @@ const Home: NextPage<HomeProps> = (props) => {
         (option) => option.value === optionValue
       );
 
-      if (matchingOption?.eliminatesOnClick) {
-        node?.options.forEach((option) => {
-          if (option == matchingOption) {
-            option.eliminated = true;
-          }
-        });
+      if (matchingOption?.eliminatesOnClick && node) {
+        const updatedOptions = node.options.map((option) =>
+          option === matchingOption ? { ...option, eliminated: true } : option
+        );
+        const updatedNode: Node = { ...node, options: updatedOptions };
 
-        nodeMap.set(shownNode, node);
-        setNodes(nodeMap);
+        setNodes((prev) => new Map(prev).set(shownNode, updatedNode));
       }
 
       matchingOption ? setShownNode(matchingOption.nextNode) : setShownNode(0);
@@ -87,16 +83,4 @@ const Home: NextPage<HomeProps> = (props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const nodes = getNodes();
-
-  const _props: HomeProps = {
-    nodes: nodes,
-  };
-
-  return {
-    props: _props,
-  };
-};
-
-export default Home;
+export default AdventureGame;

@@ -2,23 +2,33 @@
   "name": "guild-adventures",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@11.15.1",
+  "engines": {
+    "node": "^20.19.0 || ^22.13.0 || >=24"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "eslint ."
   },
   "dependencies": {
-    "next": "13.0.0",
-    "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "next": "16.2.10",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
   },
   "devDependencies": {
-    "@types/node": "18.11.8",
-    "@types/react": "18.0.24",
-    "@types/react-dom": "18.0.8",
-    "eslint": "8.26.0",
-    "eslint-config-next": "13.0.0",
-    "typescript": "4.8.4"
+    "@types/node": "24.13.3",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.2.10",
+    "typescript": "5.9.3"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "19.2.17",
+      "@types/react-dom": "19.2.3"
+    }
   }
 }

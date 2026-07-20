@@ -1,4 +1,4 @@
-import { KeyedNode } from "../../types";
+import { KeyedNode } from "../types";
 
 // TODO - replace with call to a database that grabs each node
 
@@ -140,7 +140,7 @@ const node7: KeyedNode = {
         value: "I am an alien.",
         eliminated: false,
         nextNode: 13,
-        eliminatesOnClick: true,
+        eliminatesOnClick: false,
       },
       {
         value: "My smartphone has a compass",
@@ -416,7 +416,7 @@ const node20: KeyedNode = {
         value: "Stare blankly into the abyss",
         eliminated: false,
         nextNode: 999,
-        eliminatesOnClick: true,
+        eliminatesOnClick: false,
       },
     ],
   },
@@ -446,7 +446,7 @@ const node21: KeyedNode = {
         value: "Wax on, Wax off",
         eliminated: false,
         nextNode: 999,
-        eliminatesOnClick: true,
+        eliminatesOnClick: false,
       },
       {
         value: "Pose like Bruce Lee",
@@ -517,7 +517,7 @@ const node24: KeyedNode = {
         value: "Deeply rooted anger issues!",
         eliminated: false,
         nextNode: 23,
-        eliminatesOnClick: true,
+        eliminatesOnClick: false,
       },
       {
         value: "Because; I. Am. SPARTA!",
@@ -610,6 +610,16 @@ const nodeKeysAreUnique = (): boolean => {
   return JSON.stringify(uniqueKeys.sort()) == JSON.stringify(nodeKeys.sort());
 };
 
+// A node whose notice loops back to itself can only soft-lock the player if
+// every option on it can eventually be eliminated - so at least one option
+// (or the total absence of a self-loop) must always remain clickable.
+const selfLoopingNodesRetainAnEscape = (): boolean =>
+  keyedNodes.every((keyedNode) => {
+    const { notice, options } = keyedNode.value;
+    if (notice.nextNode !== keyedNode.key) return true;
+    return options.some((option) => !option.eliminatesOnClick);
+  });
+
 const getNodes = (): KeyedNode[] => {
   if (doesAnyOptionCallMissingNode())
     throw new Error(
@@ -617,6 +627,11 @@ const getNodes = (): KeyedNode[] => {
     );
 
   if (!nodeKeysAreUnique()) throw new Error("Node with duplicate key exists.");
+
+  if (!selfLoopingNodesRetainAnEscape())
+    throw new Error(
+      "Some self-looping node has no permanently-available (non-eliminating) option, which can soft-lock the player."
+    );
 
   return keyedNodes;
 };
