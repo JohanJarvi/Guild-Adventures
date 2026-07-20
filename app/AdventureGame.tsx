@@ -1,14 +1,14 @@
-import { GetServerSideProps, NextPage } from "next";
+"use client";
+
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 import { KeyedNode, Node } from "../types";
-import getNodes from "./api/nodes";
 
-type HomeProps = {
+type AdventureGameProps = {
   nodes: KeyedNode[];
 };
 
-const Home: NextPage<HomeProps> = (props) => {
+const AdventureGame = (props: AdventureGameProps) => {
   const [shownNode, setShownNode] = useState(0);
 
   const nodeMap: Map<number, Node | undefined> = new Map(
@@ -85,16 +85,4 @@ const Home: NextPage<HomeProps> = (props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const nodes = getNodes();
-
-  const _props: HomeProps = {
-    nodes: nodes,
-  };
-
-  return {
-    props: _props,
-  };
-};
-
-export default Home;
+export default AdventureGame;

@@ -1,4 +1,4 @@
-import { KeyedNode } from "../../types";
+import { KeyedNode } from "../types";
 
 // TODO - replace with call to a database that grabs each node
 
