@@ -129,8 +129,8 @@ flowchart TD
     N23 -.->|"No thank you."| N23
     N23 ==>|"Punch the air in front of you."| N24
 
-    N24 ==>|"Deeply rooted anger issues!"| N23
-    N24 -.->|"Because; I. Am. SPARTA!"| N25
+    N24 -.->|"Deeply rooted anger issues!"| N23
+    N24 ==>|"Because; I. Am. SPARTA!"| N25
 
     class N0 start
     class N999 death
