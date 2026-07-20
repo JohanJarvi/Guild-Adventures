@@ -263,7 +263,7 @@ const node13: KeyedNode = {
   value: {
     notice: {
       value: "No you're not.",
-      nextNode: 7,
+      nextNode: 26,
     },
     options: [],
   },
@@ -362,7 +362,7 @@ const node18: KeyedNode = {
   value: {
     notice: {
       value: "You sick f***s! Gross!",
-      nextNode: 17,
+      nextNode: 30,
     },
     options: [],
   },
@@ -540,6 +540,61 @@ const node25: KeyedNode = {
   },
 };
 
+const node26: KeyedNode = {
+  key: 26,
+  value: {
+    notice: {
+      value: "No, I really am an alien.",
+      nextNode: 27,
+    },
+    options: [],
+  },
+};
+
+const node27: KeyedNode = {
+  key: 27,
+  value: {
+    notice: {
+      value: "Sure you are. And I'm the King of Space.",
+      nextNode: 28,
+    },
+    options: [],
+  },
+};
+
+const node28: KeyedNode = {
+  key: 28,
+  value: {
+    notice: {
+      value: "Fine. I'll prove it.",
+      nextNode: 29,
+    },
+    options: [],
+  },
+};
+
+const node29: KeyedNode = {
+  key: 29,
+  value: {
+    notice: {
+      value: "You attempt to phone home. All you get back is static, then silence. Nobody's coming for you.",
+      nextNode: 999,
+    },
+    options: [],
+  },
+};
+
+const node30: KeyedNode = {
+  key: 30,
+  value: {
+    notice: {
+      value: "You do it again anyway.",
+      nextNode: 999,
+    },
+    options: [],
+  },
+};
+
 const deathNode: KeyedNode = {
   key: 999,
   value: {
@@ -587,6 +642,11 @@ const keyedNodes = [
   node23,
   node24,
   node25,
+  node26,
+  node27,
+  node28,
+  node29,
+  node30,
   deathNode,
   gameOver,
 ];
@@ -610,6 +670,18 @@ const nodeKeysAreUnique = (): boolean => {
   return JSON.stringify(uniqueKeys.sort()) == JSON.stringify(nodeKeys.sort());
 };
 
+const doesAnyNoticeCallMissingNode = (): boolean => {
+  const uniqueNoticeNextNodes = new Set(
+    keyedNodes.map((keyedNode) => keyedNode.value.notice.nextNode)
+  );
+
+  const nodeKeys = keyedNodes.map((keyedNode) => keyedNode.key);
+
+  return [...uniqueNoticeNextNodes].some(
+    (nextNode) => !nodeKeys.includes(nextNode)
+  );
+};
+
 // A node whose notice loops back to itself can only soft-lock the player if
 // every option on it can eventually be eliminated - so at least one option
 // (or the total absence of a self-loop) must always remain clickable.
@@ -627,6 +699,11 @@ const getNodes = (): KeyedNode[] => {
     );
 
   if (!nodeKeysAreUnique()) throw new Error("Node with duplicate key exists.");
+
+  if (doesAnyNoticeCallMissingNode())
+    throw new Error(
+      "Some notice 'nextNode' attempts to reference invalid node."
+    );
 
   if (!selfLoopingNodesRetainAnEscape())
     throw new Error(
