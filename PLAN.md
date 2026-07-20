@@ -76,9 +76,14 @@ Four enhancements, meant to be built roughly in this order - each one is a reaso
 
 ```js
 const utterance = new SpeechSynthesisUtterance(node.notice.value);
+utterance.voice = speechSynthesis.getVoices().find(v => v.name === "Google UK English Male");
+utterance.pitch = 2.0; // 0–2, default 1
+utterance.rate = 0.9;  // 0.1–10, default 1
 utterance.onend = () => { /* start the 5s timer here */ };
 speechSynthesis.speak(utterance);
 ```
+
+Voice/pitch/rate settled through manual testing - "Google UK English Male" at pitch 2.0, rate 0.9 is the chosen narrator sound. Since exact voice availability isn't guaranteed across browsers/machines (see below), this needs a fallback (e.g. match by name, else fall back to matching `lang`, else the first available voice) rather than assuming that exact voice always exists.
 
 Known rough edges to handle, not blockers:
 - Chrome has a long-standing bug where speech synthesis can silently stop working after ~15s or many calls in one session - needs a periodic `pause()`/`resume()` keep-alive workaround.
