@@ -30,15 +30,13 @@ const Home: NextPage<HomeProps> = (props) => {
         (option) => option.value === optionValue
       );
 
-      if (matchingOption?.eliminatesOnClick) {
-        node?.options.forEach((option) => {
-          if (option == matchingOption) {
-            option.eliminated = true;
-          }
-        });
+      if (matchingOption?.eliminatesOnClick && node) {
+        const updatedOptions = node.options.map((option) =>
+          option === matchingOption ? { ...option, eliminated: true } : option
+        );
+        const updatedNode: Node = { ...node, options: updatedOptions };
 
-        nodeMap.set(shownNode, node);
-        setNodes(nodeMap);
+        setNodes(new Map(nodeMap).set(shownNode, updatedNode));
       }
 
       matchingOption ? setShownNode(matchingOption.nextNode) : setShownNode(0);
