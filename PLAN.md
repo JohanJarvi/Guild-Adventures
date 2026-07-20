@@ -72,14 +72,26 @@ Four enhancements, meant to be built roughly in this order - each one is a reaso
 
 **Depends on (2):** the more flavor nodes exist, the more the game benefits from auto-advancing through them instead of requiring a click every time - build this after there's real content to narrate.
 
-**Key decision: pre-generate audio, don't synthesize live.** The story text in `data/nodes.ts` is static content, not user input, so there's no reason to call a TTS API at runtime:
-- **Recommended:** generate an audio file per node's `notice.value` once (as a content-authoring/build step), store it as a static asset (e.g. `public/audio/{nodeKey}.mp3`), and just play it back client-side. Zero runtime API cost, zero latency, works offline, no backend or secrets needed.
-- **Alternative (simplest to prototype, lower quality):** the browser's built-in `SpeechSynthesis` Web Speech API - free and needs no backend, but voice quality and availability vary a lot across browsers/OSes, and it can't be pre-rendered.
-- Either way this is additive to the existing static/SSR architecture - it doesn't require enhancement 4's backend.
+**v1 decision: live `SpeechSynthesis` (Web Speech API), not pre-generated audio.** The story text in `data/nodes.ts` is static, so pre-generated audio was the "better quality" option - but it adds a real process cost (API key, a generation script, staleness risk if text changes without re-running it) that cuts against how organically this graph grows. `SpeechSynthesis` is built into every major browser, free, needs no backend, and narrates any current or future node text with zero extra authoring step.
+
+```js
+const utterance = new SpeechSynthesisUtterance(node.notice.value);
+utterance.onend = () => { /* start the 5s timer here */ };
+speechSynthesis.speak(utterance);
+```
+
+Known rough edges to handle, not blockers:
+- Chrome has a long-standing bug where speech synthesis can silently stop working after ~15s or many calls in one session - needs a periodic `pause()`/`resume()` keep-alive workaround.
+- It's a single browser-wide queue - call `speechSynthesis.cancel()` before starting a new utterance (e.g. in a `useEffect` cleanup) or utterances can overlap when the player advances quickly.
+- Voice quality/character varies by OS and browser; there's no fine control over delivery (pauses, emphasis) beyond rate/pitch/volume.
+
+**Build the playback trigger as a small abstraction (`speak(text) -> onEnd`) rather than wiring `SpeechSynthesis` calls directly into the node-rendering logic.** The mechanics below (mount → narrate → wait 5s → advance) don't care where the audio comes from. That matters because of what's next.
+
+**Planned v2 upgrade path (not now): a real narrator voice.** Once the pacing/UX is validated with `SpeechSynthesis`, the plan is to record actual narration - personal voice, likely pitch-shifted/processed for a grimmer tone - saved as static audio clips per node, following the same `public/audio/{nodeKey}.mp3` + generation-script pattern discussed for the TTS-API route (including the same staleness-risk caveat: re-recording/reprocessing needed whenever a node's text changes). Because playback is abstracted per the point above, this becomes a swap of the `speak()` implementation (browser synthesis → `<audio>` playback) rather than a rewrite of the timer/advance logic.
 
 **Mechanics:**
 - On mount of a no-option node, play its narration.
-- On the audio's `ended` event (native `<audio>` element if pre-generated, or `SpeechSynthesisUtterance.onend` for Web Speech), start a 5s timer.
+- On narration end (`SpeechSynthesisUtterance.onend` for v1; a native `<audio>` element's `ended` event once/if v2 lands), start a 5s timer.
 - On timer end, trigger the same navigation the header click already does (`notice.nextNode`).
 - Nodes *with* options should not auto-advance - narration can still play, but the player picks.
 
