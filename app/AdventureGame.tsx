@@ -11,17 +11,15 @@ type AdventureGameProps = {
 const AdventureGame = (props: AdventureGameProps) => {
   const [shownNode, setShownNode] = useState(0);
 
-  const nodeMap: Map<number, Node | undefined> = new Map(
-    props.nodes.map((node) => [node.key, node.value])
+  const [nodes, setNodes] = useState<Map<number, Node | undefined>>(
+    () => new Map(props.nodes.map((node) => [node.key, node.value]))
   );
-
-  const [nodes, setNodes] = useState(nodeMap);
 
   const handleNodeInteraction = (
     infoClicked: boolean,
     optionValue?: string
   ) => {
-    const node: Node | undefined = nodeMap.get(shownNode);
+    const node: Node | undefined = nodes.get(shownNode);
 
     if (infoClicked) {
       node ? setShownNode(node.notice.nextNode) : setShownNode(0);
@@ -36,7 +34,7 @@ const AdventureGame = (props: AdventureGameProps) => {
         );
         const updatedNode: Node = { ...node, options: updatedOptions };
 
-        setNodes(new Map(nodeMap).set(shownNode, updatedNode));
+        setNodes((prev) => new Map(prev).set(shownNode, updatedNode));
       }
 
       matchingOption ? setShownNode(matchingOption.nextNode) : setShownNode(0);
